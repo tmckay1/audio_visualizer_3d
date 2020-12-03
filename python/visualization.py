@@ -123,6 +123,8 @@ def visualize_scroll(y):
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
 
+def visualize_scroll_3d(y):
+    pass
 
 def visualize_energy(y):
     """Effect that expands from the center with increasing sound energy"""
@@ -153,6 +155,8 @@ def visualize_energy(y):
     # Set the new pixel value
     return np.concatenate((p[:, ::-1], p), axis=1)
 
+def visualize_energy(y):
+    pass
 
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
 
@@ -175,6 +179,8 @@ def visualize_spectrum(y):
     output = np.array([r, g,b]) * 255
     return output
 
+def visualize_spectrum_3d(y):
+    pass
 
 fft_plot_filter = dsp.ExpFilter(np.tile(1e-1, config.N_FFT_BINS),
                          alpha_decay=0.5, alpha_rise=0.99)

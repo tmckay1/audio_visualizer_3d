@@ -4,6 +4,8 @@ from __future__ import division
 import platform
 import numpy as np
 import config
+import cube
+import square
 
 # ESP8266 uses WiFi communication
 if config.DEVICE == 'esp8266':
@@ -105,7 +107,7 @@ def _update_pi():
         if np.array_equal(p[:, i], _prev_pixels[:, i]):
             continue
         #strip._led_data[i] = rgb[i]
-        strip._led_data[i] = int(rgb[i])
+        square.draw_point(strip, rgb, i)
     _prev_pixels = np.copy(p)
     strip.show()
 
