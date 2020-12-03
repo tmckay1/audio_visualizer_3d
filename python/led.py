@@ -14,7 +14,7 @@ if config.DEVICE == 'esp8266':
 # Raspberry Pi controls the LED strip directly
 elif config.DEVICE == 'pi':
     import neopixel
-    strip = neopixel.Adafruit_NeoPixel(config.N_PIXELS, config.LED_PIN,
+    strip = neopixel.Adafruit_NeoPixel(config.N_PIXELS ** 2, config.LED_PIN,
                                        config.LED_FREQ_HZ, config.LED_DMA,
                                        config.LED_INVERT, config.BRIGHTNESS)
     strip.begin()
