@@ -12,7 +12,7 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         # Ignore pixels if they haven't changed (saves bandwidth)
         if np.array_equal(p[:, index], prev_pixels[:, index]):
             continue
-        rbg_max = 2 ** 22
+        rgb_max = 2 ** 22
         max_level = int((rgb[index] / rgb_max) * num_leds)
         should_draw = max_level < row
         strip._led_data[i] = int(rgb[index]) if should_draw else 0
