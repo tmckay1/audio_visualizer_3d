@@ -1,16 +1,25 @@
 import numpy as np
 
 def draw_points(strip, rgb, num_leds, p, prev_pixels):
-    for x in range(num_leds):
-      for i in range(num_leds):
-        for j in range(num_leds):
-          odd_row = ((i // num_leds) % 2) == 1
-          if odd_row:
-              # we're snaked so the index of the rbg array is not exactly the mod of the current led position
-              index = num_leds - (i % num_leds) - 1
-          else:
-              index = i % num_leds
-          # Ignore pixels if they haven't changed (saves bandwidth)
-          if np.array_equal(p[:, index], prev_pixels[:, index]):
-              continue
-          strip._led_data[i] = int(rgb[index])
+    for i in range(num_leds ** 3):
+        leds_per_plane = num_leds ** 2
+        current_led_in_plane = i % leds_per_plane
+        z = i // leds_per_plane
+        y = (current_led_in_plane // num_leds) # for even z
+        odd_z = z % 2 == 1
+
+        # if we are an odd z, the y is reversed
+        if odd_z:
+            y = (leds_per_plane - current_led_in_plane) % num_leds
+        
+        x = i % num_leds # for even y, even z
+        odd_y = (y % 2) == 1
+
+        # if we are an odd y, the x is reversed
+        if odd_y:
+            x = num_leds - (current_led_in_plane % num_leds) - 1
+
+        # Ignore pixels if they haven't changed (saves bandwidth)
+        if np.array_equal(p[:, x], prev_pixels[:, x]):
+            continue
+        strip._led_data[i] = int(rgb[x])
