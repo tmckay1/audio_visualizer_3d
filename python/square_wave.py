@@ -2,7 +2,8 @@ import numpy as np
 
 def draw_points(strip, rgb, num_leds, p, prev_pixels):
     for i in range(num_leds ** 2):
-        odd_row = ((i // num_leds) % 2) == 1
+        row = i // num_leds
+        odd_row = (row % 2) == 1
         remainder = (i % num_leds)
         index = remainder
         if odd_row:
@@ -11,4 +12,7 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         # Ignore pixels if they haven't changed (saves bandwidth)
         if np.array_equal(p[:, index], prev_pixels[:, index]):
             continue
-        strip._led_data[i] = int(rgb[index])
+        rbg_max = 2 ** 22
+        max_level = int((rgb[index] / rgb_max) * num_leds)
+        should_draw = max_level < row
+        strip._led_data[i] = int(rgb[index]) if should_draw else 0
