@@ -104,7 +104,7 @@ def _update_pi():
     b = p[2][:].astype(int)
     rgb = np.bitwise_or(np.bitwise_or(r, g), b)
     # Update the pixels
-    cube_wave.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
+    cube.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
     _prev_pixels = np.copy(p)
     strip.show()
 

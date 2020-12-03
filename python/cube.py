@@ -10,13 +10,13 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
 
         # if we are an odd z, the y is reversed
         if odd_z:
-            y = (leds_per_plane - current_led_in_plane) % num_leds
+            y = (leds_per_plane - (current_led_in_plane + 1)) // num_leds
         
         x = i % num_leds # for even y, even z
         odd_y = (y % 2) == 1
 
         # if we are an odd y, the x is reversed
-        if odd_y:
+        if odd_y and not odd_z:
             x = num_leds - (current_led_in_plane % num_leds) - 1
 
         # Ignore pixels if they haven't changed (saves bandwidth)
