@@ -19,12 +19,9 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         if odd_y and not odd_z:
             x = num_leds - (current_led_in_plane % num_leds) - 1
 
-        # Ignore pixels if they haven't changed (saves bandwidth)
-        if np.array_equal(p[:, x], prev_pixels[:, x]):
-            continue
         rgb_max = 2 ** 22
-        max_level = int((rgb[x] / rgb_max) * num_leds)
-        should_draw = max_level == y
+        max_level = int((rgb[get_index_for_point(x,y,z)] / rgb_max) * num_leds)
+        should_draw = max_level == z
         strip._led_data[i] = int(rgb[get_index_for_point(x,y,z)]) if should_draw else 0
 
 def genCubeVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
