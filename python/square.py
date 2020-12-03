@@ -5,5 +5,7 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         # Ignore pixels if they haven't changed (saves bandwidth)
         if np.array_equal(p[:, i], prev_pixels[:, i]):
             continue
-        #strip._led_data[i] = rgb[i]
-        strip._led_data[i] = int(rgb[i])
+        plot_point(strip, rbg, i)
+
+def plot_point(strip, rgb, i):
+    strip._led_data[i] = int(rgb[i])
