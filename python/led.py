@@ -6,6 +6,7 @@ import numpy as np
 import config
 import cube
 import square
+import square_wave
 
 # ESP8266 uses WiFi communication
 if config.DEVICE == 'esp8266':
@@ -102,7 +103,7 @@ def _update_pi():
     b = p[2][:].astype(int)
     rgb = np.bitwise_or(np.bitwise_or(r, g), b)
     # Update the pixels
-    square.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
+    square_wave.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
     _prev_pixels = np.copy(p)
     strip.show()
 
