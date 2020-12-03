@@ -5,8 +5,8 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         remainder = (i % num_leds)
         x = remainder
         y = i // num_leds
-        odd_row = (y % 2) == 1
-        if odd_row:
+        odd_y = (y % 2) == 1
+        if odd_y:
             # we're snaked so the index of the rbg array is not exactly the mod of the current led position
             x = num_leds - remainder - 1
 
