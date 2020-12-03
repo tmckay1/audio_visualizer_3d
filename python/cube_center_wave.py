@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def draw_points(strip, rgb, num_leds, p, prev_pixels):
     for i in range(num_leds ** 3):
