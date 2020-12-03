@@ -26,4 +26,3 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
         max_level = int((rgb[x] / rgb_max) * num_leds)
         should_draw = max_level == y
         strip._led_data[i] = int(rgb[x]) if should_draw else 0
-        strip._led_data[i] = int(rgb[x])
