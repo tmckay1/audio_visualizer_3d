@@ -4,16 +4,7 @@ from __future__ import division
 import platform
 import numpy as np
 import config
-import cube
-import cube_center_wave
-import cube_3d_wave
-import cube_side_wave
-import cube_wave
-import cube_pulse
-import half_sphere_pulse
-import sphere_pulse
-import square
-import square_wave
+from pi_animations import *
 
 # ESP8266 uses WiFi communication
 if config.DEVICE == 'esp8266':
