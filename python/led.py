@@ -15,7 +15,7 @@ from pi_animations import sphere_pulse
 from pi_animations import square
 from pi_animations import square_wave
 
-pi_animation = cube_3d_wave
+pi_animation = cube_pulse
 
 # ESP8266 uses WiFi communication
 if config.DEVICE == 'esp8266':
