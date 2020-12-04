@@ -23,4 +23,4 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         percent_of_max = rgb[rgb_index] / rgb_max
         max_level = int(percent_of_max * num_leds) # the maximum level this wave form should reach for the given index
         should_draw = rgb_index <= max_level # only draw the pixel if it is at or below the maximum level, so we see a wave
-        strip._led_data[i] = int(rgb[color_mapper.get_classic_color(percent_of_max)]) if should_draw else 0
+        strip._led_data[i] = int(color_mapper.get_classic_color(percent_of_max)) if should_draw else 0
