@@ -35,6 +35,23 @@ def get_square_xy_from_1d_index(i, num_leds):
 
     return (x, y)
 
+def gen_cube_vector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
+    """Generates a map of vector lengths from the center point to each coordinate
+    x - width of matrix to generate
+    y - height of matrix to generate
+    z - depth of matrix to generate
+    x_mult - value to scale x-axis by
+    y_mult - value to scale y-axis by
+    z_mult - value to scale z-axis by
+    """
+    cX = (x - 1) / 2.0
+    cY = (y - 1) / 2.0
+    cZ = (z - 1) / 2.0
+
+    def vect(_x, _y, _z):
+        return int(max(abs(_x - cX), abs(_y - cY), abs(_z - cZ)))
+
+    return [[[vect(_x, _y, _z) for _z in range(z)] for _y in range(y)] for _x in range(x)]
 
 def gen_half_sphere_vector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
     """Generates a map of vector lengths from the center point to each coordinate
