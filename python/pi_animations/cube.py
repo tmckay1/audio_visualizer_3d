@@ -25,7 +25,7 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         # if we are an odd y and even z, the x is reversed. If y and z were
         # both odd, then the reflection would cancel it out and x will
         # be as if it is even y, even z
-        if odd_y and not odd_z:
+        if (odd_y and not odd_z) or (odd_z and not odd_y):
             x = num_leds - (current_led_in_plane % num_leds) - 1
 
         # Ignore pixels if they haven't changed (saves bandwidth)
