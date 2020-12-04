@@ -1,5 +1,6 @@
 import numpy as np
 from .helpers import coordinate_mapper
+from .helpers import color_mapper
 
 """
 This function represents a circle contracting and enlarging in the x-y plane
@@ -23,4 +24,4 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         rgb_index = cube_mapping[x][y][z] # this is the radius away from the center of a single plane of the cube
         max_level = int((rgb[rgb_index] / rgb_max) * num_leds) # the maximum level this wave form should reach for the given index
         should_draw = z <= max_level # only draw the pixel in the z plane if it is at or below the maximum level, so we see a wave
-        strip._led_data[i] = int(rgb[rgb_index]) if should_draw else 0
+        strip._led_data[i] = int(color_mapper.get_classic_color(z / num_leds)) if should_draw else 0
