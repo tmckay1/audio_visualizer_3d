@@ -1,5 +1,6 @@
 import numpy as np
 from .helpers import coordinate_mapper
+from .helpers import color_mapper
 
 """
 This function represents a pulsing cube in the center of the led cube that has half the width map to a
@@ -19,6 +20,7 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         #     continue
         
         rgb_index = cube_mapping[x][y][z] # this is how far the top of the cube is from the center
-        max_level = int((rgb[rgb_index] / rgb_max) * num_leds) # the maximum level this wave form should reach for the given index
+        percent_of_max = rgb[rgb_index] / rgb_max
+        max_level = int(percent_of_max * num_leds) # the maximum level this wave form should reach for the given index
         should_draw = rgb_index <= max_level # only draw the pixel if it is at or below the maximum level, so we see a wave
-        strip._led_data[i] = int(rgb[rgb_index]) if should_draw else 0
+        strip._led_data[i] = int(rgb[color_mapper.get_classic_color(percent_of_max)]) if should_draw else 0
