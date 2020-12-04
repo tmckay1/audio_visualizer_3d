@@ -4,8 +4,9 @@ show (think green/yellow/red)
 """
 def get_classic_color(percent_of_max):
   normalized_value = percent_of_max * 100
+  print(normalized_value)
   if normalized_value < 50:
-    return 2 ** 6
+    return 2 ** 14
   elif normalized_value < 80:
     return 16776960
   else:
