@@ -22,4 +22,4 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         rgb_index = cube_mapping[x][y][z] # this is how far the top of the cube is from the center
         max_level = int((rgb[rgb_index] / rgb_max) * num_leds) # the maximum level this wave form should reach for the given index
         should_draw = rgb_index <= max_level # only draw the pixel if it is at or below the maximum level, so we see a wave
-        strip._led_data[i] = int(color_mapper.get_classic_color(rgb_index / num_leds)) if should_draw else 0
+        strip._led_data[i] = int(color_mapper.get_classic_color((rgb_index * 2) / num_leds)) if should_draw else 0
