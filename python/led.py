@@ -15,6 +15,8 @@ from pi_animations import sphere_pulse
 from pi_animations import square
 from pi_animations import square_wave
 
+pi_animation = square
+
 # ESP8266 uses WiFi communication
 if config.DEVICE == 'esp8266':
     import socket
@@ -110,7 +112,7 @@ def _update_pi():
     b = p[2][:].astype(int)
     rgb = np.bitwise_or(np.bitwise_or(r, g), b)
     # Update the pixels
-    cube_3d_wave.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
+    pi_animation.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
     _prev_pixels = np.copy(p)
     strip.show()
 
