@@ -1,6 +1,10 @@
 import numpy as np
 from .helpers import coordinate_mapper
 
+"""
+This function represents a pulsing sphere on the bottom of the cube that has a radius map to a
+frequency of the data, so the sphere simulates pulsing in and out.
+"""
 def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
     leds_per_plane = num_leds ** 2
     cube_mapping = coordinate_mapper.gen_half_sphere_vector(num_leds, num_leds, num_leds)
