@@ -1,58 +1,20 @@
 import numpy as np
-import math
+from .helpers import coordinate_mapper
 
 def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
+    leds_per_plane = num_leds ** 2
+    cube_mapping = coordinate_mapper.gen_half_sphere_vector(num_leds, num_leds, num_leds)
+
+    # loop through all indexes in the 1d strip and map it to the 3d cube based on
+    # our setup (snaked leds on each plane and snaked planes)
     for i in range(num_leds ** 3):
-        leds_per_plane = num_leds ** 2
-        current_led_in_plane = i % leds_per_plane
-        z = i // leds_per_plane
-        y = (current_led_in_plane // num_leds) # for even z
-        odd_z = z % 2 == 1
-
-        # if we are an odd z, the y is reversed
-        if odd_z:
-            y = (leds_per_plane - (current_led_in_plane + 1)) // num_leds
-        
-        x = i % num_leds # for even y, even z
-        odd_y = (y % 2) == 1
-
-        # if we are an odd y, the x is reversed
-        if odd_y and not odd_z:
-            x = num_leds - (current_led_in_plane % num_leds) - 1
+        (x, y, z) = coordinate_mapper.get_cube_xyz_from_1d_index(i, num_leds)
 
         # Ignore pixels if they haven't changed (saves bandwidth)
         # if np.array_equal(p[:, x], prev_pixels[:, x]):
         #     continue
 
-        rgb_max = 2 ** 22
-        max_level = int((rgb[get_index_for_point(x, y, z)] / rgb_max) * num_leds)
-        should_draw = get_index_for_point(x, y, z) <= max_level
-        strip._led_data[i] = int(rgb[get_index_for_point(x, y, z)]) if should_draw else 0
-
-def genSphereVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
-    """Generates a map of vector lengths from the center point to each coordinate
-    x - width of matrix to generate
-    y - height of matrix to generate
-    z - depth of matrix to generate
-    x_mult - value to scale x-axis by
-    y_mult - value to scale y-axis by
-    z_mult - value to scale z-axis by
-    """
-    cX = (x - 1) / 2.0
-    cY = (y - 1) / 2.0
-    cZ = 0
-
-    num_leds = z
-
-    def vect(_x, _y, _z):
-        return min(int(math.sqrt(math.pow(_x - cX, 2 * x_mult) +
-                             math.pow(_y - cY, 2 * y_mult) +
-                             math.pow(_z - cZ, 2 * z_mult))), num_leds - 1)
-
-    return [[[vect(_x, _y, _z) for _z in range(z)] for _y in range(y)] for _x in range(x)]
-
-cube_mapping = genSphereVector(8, 8, 8)
-
-def get_index_for_point(x, y, z):
-    global cube_mapping
-    return cube_mapping[x][y][z]
+        rgb_index = cube_mapping[x][y][z] # this is the radius away from the center of the sphere
+        max_level = int((rgb[rgb_index] / rgb_max) * num_leds) # the maximum level this wave form should reach for the given index
+        should_draw = rgb_index <= max_level # only draw the pixel if it is at or below the maximum level, so we see a wave
+        strip._led_data[i] = int(rgb[rgb_index]) if should_draw else 00
