@@ -19,6 +19,6 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
         # if np.array_equal(p[:, x], prev_pixels[:, x]):
         #     continue
 
-        max_level = int((rgb[x] / rgb_max) * num_leds)
-        should_draw = z <= max_level
+        max_level = int((rgb[x] / rgb_max) * num_leds) # the maximum level this wave form should reach for the given x
+        should_draw = z <= max_level # only draw the pixel if it is at or below the maximum level, so we see a wave
         strip._led_data[i] = int(rgb[x]) if should_draw else 0
