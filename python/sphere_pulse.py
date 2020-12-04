@@ -3,6 +3,10 @@ import math
 
 def draw_points(strip, rgb, num_leds, p, prev_pixels):
     for i in range(num_leds ** 3):
+        # Ignore pixels if they haven't changed (saves bandwidth)
+        if np.array_equal(p[:, i], prev_pixels[:, i]):
+            continue
+
         leds_per_plane = num_leds ** 2
         current_led_in_plane = i % leds_per_plane
         z = i // leds_per_plane
