@@ -21,11 +21,11 @@ def draw_points(strip, rgb, num_leds, p, prev_pixels):
             x = num_leds - (current_led_in_plane % num_leds) - 1
 
         rgb_max = 2 ** 22
-        max_level = int((rgb[get_index_for_point(x, y, z)] / rgb_max) * num_leds)
-        should_draw = get_index_for_point(x, y, z) <= max_level
-        strip._led_data[i] = int(rgb[get_index_for_point(x, y, z)]) if should_draw else 0
+        max_level = int((rgb[get_rgb_index_for_point(x, y, z)] / rgb_max) * num_leds)
+        should_draw = get_rgb_index_for_point(x, y, z) <= max_level
+        strip._led_data[i] = int(rgb[get_rgb_index_for_point(x, y, z)]) if should_draw else 0
 
-def genSphereVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
+def genWaveVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
     """Generates a map of vector lengths from the center point to each coordinate
     x - width of matrix to generate
     y - height of matrix to generate
@@ -36,19 +36,15 @@ def genSphereVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
     """
     cX = (x - 1) / 2.0
     cY = (y - 1) / 2.0
-    cZ = 0
-
-    num_leds = z
 
     def vect(_x, _y, _z):
-        return min(int(math.sqrt(math.pow(_x - cX, 2 * x_mult) +
-                             math.pow(_y - cY, 2 * y_mult) +
-                             math.pow(_z - cZ, 2 * z_mult))), num_leds - 1)
+        return abs(z // 2 - int(math.sqrt(math.pow(_x - cX, 2 * x_mult) +
+                             math.pow(_y - cY, 2 * y_mult))))
 
     return [[[vect(_x, _y, _z) for _z in range(z)] for _y in range(y)] for _x in range(x)]
 
-cube_mapping = genSphereVector(8, 8, 8)
+cube_mapping = genWaveVector(8, 8, 8)
 
-def get_index_for_point(x, y, z):
+def get_rgb_index_for_point(x, y, z):
     global cube_mapping
     return cube_mapping[x][y][z]

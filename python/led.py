@@ -5,6 +5,7 @@ import platform
 import numpy as np
 import config
 import cube
+import cube_center_wave
 import cube_side_wave
 import cube_wave
 import cube_pulse
@@ -108,7 +109,7 @@ def _update_pi():
     b = p[2][:].astype(int)
     rgb = np.bitwise_or(np.bitwise_or(r, g), b)
     # Update the pixels
-    half_sphere_pulse.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
+    cube_center_wave.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
     _prev_pixels = np.copy(p)
     strip.show()
 
