@@ -38,10 +38,12 @@ def genSphereVector(x, y, z, x_mult=1, y_mult=1, z_mult=1):
     cY = (y - 1) / 2.0
     cZ = 0
 
+    num_leds = z
+
     def vect(_x, _y, _z):
-        return int(math.sqrt(math.pow(_x - cX, 2 * x_mult) +
+        return min(int(math.sqrt(math.pow(_x - cX, 2 * x_mult) +
                              math.pow(_y - cY, 2 * y_mult) +
-                             math.pow(_z - cZ, 2 * z_mult)))
+                             math.pow(_z - cZ, 2 * z_mult))), num_leds - 1)
 
     return [[[vect(_x, _y, _z) for _z in range(z)] for _y in range(y)] for _x in range(x)]
 
