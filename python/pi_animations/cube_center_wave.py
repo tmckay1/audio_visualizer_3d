@@ -1,6 +1,11 @@
 import numpy as np
 from .helpers import coordinate_mapper
 
+"""
+This function represents a circle contracting and enlarging in the x-y plane
+and the lights are then extended in the z plane to make it 3d. The radius of the circle
+represents a different frequency bucket
+"""
 def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
     leds_per_plane = num_leds ** 2
     cube_mapping = coordinate_mapper.gen_2d_cube_vector(num_leds, num_leds, num_leds)
