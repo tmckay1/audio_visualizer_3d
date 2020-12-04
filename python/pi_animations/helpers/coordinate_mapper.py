@@ -20,3 +20,15 @@ def get_cube_xyz_from_1d_index(i, num_leds):
         x = num_leds - (current_led_in_plane % num_leds) - 1
 
     return (x, y, z)
+
+def get_square_xy_from_1d_index(i, num_leds):
+    x = i % num_leds # for even y since we are in a snaking pattern
+    y = i // num_leds
+    
+    # check if y is odd, in which case the x needs to change
+    if y % 2 == 1:
+        # we're snaked so the index of the rbg array is not exactly the mod of the current led position
+        # instead it's the reflection of this point across the center of the number of leds
+        x = num_leds - x - 1
+
+    return (x, y)
