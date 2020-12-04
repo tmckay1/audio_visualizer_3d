@@ -1,5 +1,5 @@
 import numpy as np
-from helpers import coordinate_mapper
+from .helpers import coordinate_mapper
 
 """
 This function represents the 3d version from the simple 1d strip example and 
