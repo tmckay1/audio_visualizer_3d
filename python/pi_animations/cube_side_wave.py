@@ -1,6 +1,6 @@
 import numpy as np
 
-def draw_points(strip, rgb, num_leds, p, prev_pixels):
+def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
     for i in range(num_leds ** 3):
         # Ignore pixels if they haven't changed (saves bandwidth)
         if np.array_equal(p[:, i], prev_pixels[:, i]):

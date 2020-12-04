@@ -111,8 +111,12 @@ def _update_pi():
     g = np.left_shift(p[1][:].astype(int), 16)
     b = p[2][:].astype(int)
     rgb = np.bitwise_or(np.bitwise_or(r, g), b)
+    # The value to use when comparing an rgb entry to its maximum value. Theoretically it is 2 ** 23, but that is 
+    # generally too high in practice and needs to be lower. Conceptually this represents the sensitivity of the 
+    # wave visualization
+    rgb_max = 2 ** 22
     # Update the pixels
-    pi_animation.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels)
+    pi_animation.draw_points(strip, rgb, config.N_PIXELS, p, _prev_pixels, rgb_max)
     _prev_pixels = np.copy(p)
     strip.show()
 

@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-def draw_points(strip, rgb, num_leds, p, prev_pixels):
+def draw_points(strip, rgb, num_leds, p, prev_pixels, rgb_max):
     for i in range(num_leds ** 3):
         leds_per_plane = num_leds ** 2
         current_led_in_plane = i % leds_per_plane
